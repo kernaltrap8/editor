@@ -8,13 +8,22 @@ void disableRawMode();
 void printChar();
 void die(const char* s);
 char editorReadKey();
+void abFree(struct abuf* ab);
 
 #define CTRL_KEY(k) ((k) & 0x1f)
 
+typedef struct erow {
+    int size;
+    char* chars;
+} erow;
+
 struct editorConfig {
     int cx, cy;
+    int rowoff;
     int screenrows;
     int screencols;
+    int numrows;
+    erow* row;
     struct termios orig_termios;
 };
 
