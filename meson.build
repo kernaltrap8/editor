@@ -5,4 +5,5 @@ project('editor', 'c',
 executable('editor',
            'src/editor.c',
            'src/terminal.c',
+           'src/abuf.c',
            install : true)
