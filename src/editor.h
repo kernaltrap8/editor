@@ -1,4 +1,4 @@
-#define EDITOR_VERSION "0.1"
+#define EDITOR_VERSION "0.2"
 #define quitKey 'q'
 static char rawTermBuff = '\0';
 
