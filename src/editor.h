@@ -8,7 +8,7 @@ void disableRawMode();
 void printChar();
 void die(const char* s);
 char editorReadKey();
-void abFree(struct abuf* ab);
+//void abFree(struct abuf* ab);
 
 #define CTRL_KEY(k) ((k) & 0x1f)
 
@@ -20,6 +20,7 @@ typedef struct erow {
 struct editorConfig {
     int cx, cy;
     int rowoff;
+    int coloff;
     int screenrows;
     int screencols;
     int numrows;

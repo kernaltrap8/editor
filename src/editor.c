@@ -22,6 +22,21 @@ void editorScroll() {
     }
 }
 
+void abAppend(struct abuf* ab, const char* s, int len) {
+    char* new = realloc(ab->b, ab->len + len);
+
+    if (new == NULL) {
+        return;
+    }
+    memcpy(&new[ab->len], s, len);
+    ab->b = new;
+    ab->len += len;
+}
+
+void abFree(struct abuf* ab) {
+    free(ab->b);
+}
+
 void editorDrawRows(struct abuf* ab) {
     int y;
     for (y = 0; y < E.screenrows; y++) {
@@ -50,11 +65,15 @@ void editorDrawRows(struct abuf* ab) {
                     abAppend(ab, "/", 1);
                 }
             } else {
-                int len = E.row[filerow].size;
+                int len = E.row[filerow].size - E.coloff;
+                if (len < 0) {
+                    len = 0;
+                }
+
                 if (len > E.screencols) {
                     len = E.screencols;
                 }
-                abAppend(ab, E.row[filerow].chars, len);
+                abAppend(ab, E.row[filerow].chars[E.coloff], len);
             }
         }
 
@@ -220,10 +239,13 @@ void editorOpen(char* filename) {
     fclose(fp);
 }
 
+
+
 void initEditor() {
     E.cx = 0;
     E.cy = 0;
     E.rowoff = 0;
+    E.coloff = 0;
     E.numrows = 0;
     E.row = NULL;
 
